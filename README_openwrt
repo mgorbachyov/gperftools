@@ -1,0 +1,29 @@
+How to build:
+
+1. Add gperftools feed to OpenWrt feeds.conf:
+src-link gperftools /home/user/gperftools
+
+2. Update OpenWrt feeds:
+scripts/feeds update -a
+
+3. Enable OpenWrt package source tree override. See it in .config:
+CONFIG_SRC_TREE_OVERRIDE=y
+
+4. Add tcmalloc to OpenWrt build system:
+scripts/feeds install tcmalloc
+
+5. Run "make menuconfig", select Libraries/tcmalloc. See it in .config:
+CONFIG_PACKAGE_tcmalloc=m
+
+6. Build tcmalloc:
+make package/tcmalloc/compile
+
+
+Notes:
+
+By default OpenWrt uses musl. gperftools/tcmalloc does not work with musl
+at the moment of writing:
+https://github.com/gperftools/gperftools/issues/693
+
+Build OpenWrt with glibc to use tcmalloc.
+
